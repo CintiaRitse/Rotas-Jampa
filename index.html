@@ -6,95 +6,104 @@
   <meta name="description" content="Conheça pontos turísticos, praias, cultura e história de João Pessoa.">
   <title>Rotas Jampa | João Pessoa</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="img/WhatsApp Image 2026-09-06 at 20.38.51.jpeg" type="icone do site">
+  <link rel="icon" href="img/WhatsApp Image 2026-09-06 at 20.38.51.jpeg" type="image/jpeg">
 </head>
 <body>
-
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#inicio">
         <span class="brand-mark">RJ</span>
         <span>Rotas Jampa</span>
       </a>
-
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
-
       <nav class="primary-nav" id="menu">
         <a href="#inicio">Início</a>
         <a href="#roteiro">Roteiro</a>
         <a href="#culturais">Culturais</a>
         <a href="#praias">Praias e Ilhas</a>
         <a href="#historia">História de João Pessoa</a>
+        <a href="#acesso">Logar</a>
       </nav>
     </div>
   </header>
-
   <main>
-
     <section class="hero" id="inicio">
-      <img src="img/orla de joao pessoa.jpg"alt="Vista aérea da orla de João Pessoa">
+      <img src="img/orla de joao pessoa.jpg" alt="Vista aérea da orla de João Pessoa">
       <div class="hero-overlay"></div>
-
       <div class="container hero-content">
         <span class="hero-kicker">Descubra a capital paraibana</span>
-
         <h1>
           João Pessoa<br>
           <strong>cultura, mar e história</strong>
         </h1>
-
         <div class="hero-actions">
           <a class="button primary" href="#roteiro">Ver roteiro</a>
           <a class="button ghost" href="#historia">História de João Pessoa</a>
         </div>
       </div>
     </section>
-
-    <section class="quick-info">
-      <div class="container quick-grid">
-        <div>
-          <strong>10</strong>
-          <span>lugares do projeto</span>
+    <section class="access-section" id="acesso">
+      <div class="container">
+        <div class="access-title">
+          <span class="eyebrow">Acesso à Plataforma</span>
+          <h2>Escolha seu tipo de usuário</h2>
+          <p>Selecione seu perfil e informe seus dados para acessar a plataforma.</p>
         </div>
-
-        <div>
-          <strong>6</strong>
-          <span>pontos culturais</span>
+        <div class="profile-grid">
+          <article class="profile-card">
+            <div class="profile-icon">👤</div>
+            <h3>Turista</h3>
+            <p>Acesse pontos turísticos, avaliações, fotos e favoritos.</p>
+            <button class="button profile-button" data-profile="turista" type="button">Entrar como Turista</button>
+          </article>
+          <article class="profile-card">
+            <div class="profile-icon">📍</div>
+            <h3>Guia Turístico</h3>
+            <p>Acesse os recursos de guia e divulgue seus passeios.</p>
+            <button class="button profile-button" data-profile="guia" type="button">Entrar como Guia</button>
+          </article>
+          <article class="profile-card">
+            <div class="profile-icon">⚙️</div>
+            <h3>Administrador</h3>
+            <p>Gerencie pontos turísticos, avaliações e conteúdos.</p>
+            <button class="button profile-button" data-profile="admin" type="button">Entrar como Administrador</button>
+          </article>
         </div>
-
-        <div>
-          <strong>4</strong>
-          <span>praias e ilha</span>
+        <div class="login-box" id="login-box">
+          <div class="login-header">
+            <div>
+              <span class="eyebrow">Login</span>
+              <h3 id="login-title">Acesso</h3>
+            </div>
+            <button id="close-login" type="button" aria-label="Fechar formulário">×</button>
+          </div>
+          <form id="login-form">
+            <div id="login-fields"></div>
+            <button class="button primary login-submit" type="submit">Entrar</button>
+          </form>
         </div>
       </div>
     </section>
-
     <section class="section intro-section">
       <div class="container split">
         <div>
           <span class="eyebrow">Conheça João Pessoa</span>
           <h2>Um passeio pelos lugares que marcam a cidade</h2>
         </div>
-
         <div>
           <p>João Pessoa reúne patrimônio histórico, espaços culturais, áreas verdes e belas paisagens litorâneas. Este roteiro apresenta alguns dos lugares destacados no projeto e organiza cada parada de forma visual e objetiva.</p>
         </div>
       </div>
     </section>
-
     <section class="section route-section" id="roteiro">
       <div class="container">
-
         <div class="section-title">
           <span class="eyebrow">Roteiro</span>
           <h2>Principais paradas</h2>
           <p>Clique em uma parada para visualizar o lugar em destaque.</p>
         </div>
-
         <div class="route-layout">
-
           <div class="route-list">
-
             <button class="route-item active"
               data-image="img/praça anteno.jpg"
               data-title="Praça Anteno"
@@ -105,7 +114,6 @@
                 <small>Centro Histórico</small>
               </div>
             </button>
-
             <button class="route-item"
               data-image="img/Jardim botânico.jpg"
               data-title="Jardim Botânico"
@@ -116,7 +124,6 @@
                 <small>Natureza</small>
               </div>
             </button>
-
             <button class="route-item"
               data-image="img/Farol do cabo branco.jpg"
               data-title="Farol do Cabo Branco"
@@ -127,7 +134,6 @@
                 <small>Cartão-postal</small>
               </div>
             </button>
-
             <button class="route-item"
               data-image="img/Teatro Santa Roza.jpg"
               data-title="Theatro Santa Roza"
@@ -138,7 +144,6 @@
                 <small>Patrimônio</small>
               </div>
             </button>
-
             <button class="route-item"
               data-image="img/Estação cabro branco.jpg"
               data-title="Estação Cabo Branco"
@@ -149,7 +154,6 @@
                 <small>Arte e ciência</small>
               </div>
             </button>
-
             <button class="route-item"
               data-image="img/Igreja da São Francisco.jpg"
               data-title="Igreja de São Francisco"
@@ -160,37 +164,27 @@
                 <small>História religiosa</small>
               </div>
             </button>
-
           </div>
-
           <article class="route-preview">
             <img id="route-image" src="img/praça anteno.jpg" alt="Praça Anteno">
-
             <div class="route-preview-content">
               <span>Parada em destaque</span>
-
               <h3 id="route-title">Praça Anteno</h3>
-
               <p id="route-text">
                 Localizada no Centro Histórico de João Pessoa, a praça se destaca pelos sobrados coloridos dos séculos XIX e XX, originalmente construídos para abrigar lojas. As construções misturam referências ecléticas e Art Déco, além de elementos clássicos, barrocos e neogóticos. Hoje, o entorno abriga bares, ateliês de artistas plásticos e a Fundação de Cultura de João Pessoa.
               </p>
             </div>
           </article>
-
         </div>
       </div>
     </section>
-
     <section class="section cards-section" id="culturais">
       <div class="container">
-
         <div class="section-title">
           <span class="eyebrow">Cultura e história</span>
           <h2>Pontos culturais</h2>
         </div>
-
         <div class="tour-grid">
-
           <article class="tour-card">
             <img src="img/praça anteno.jpg" alt="Praça Anteno">
             <div>
@@ -199,7 +193,6 @@
               <p>É uma praça localizada no Centro Histórico de João Pessoa. Seus sobrados coloridos dos séculos XIX e XX foram originalmente construídos para abrigar lojas. A arquitetura mistura estilo eclético, Art Déco, elementos clássicos, barrocos e neogóticos. Atualmente, funcionam nessas casas bares, ateliês de artistas plásticos e a Fundação de Cultura de João Pessoa.</p>
             </div>
           </article>
-
           <article class="tour-card">
             <img src="img/Jardim botânico.jpg" alt="Jardim Botânico">
             <div>
@@ -208,7 +201,6 @@
               <p>O Jardim Botânico Benjamim Maranhão, popularmente conhecido como Mata do Buraquinho, é um jardim botânico situado em João Pessoa. Foi criado pelo governo estadual em 28 de agosto de 2000 e possui 515 hectares de área verde cercada pela zona urbana.</p>
             </div>
           </article>
-
           <article class="tour-card">
             <img src="img/Farol do cabo branco.jpg" alt="Farol do Cabo Branco">
             <div>
@@ -217,7 +209,6 @@
               <p>O Farol do Cabo Branco é um dos pontos turísticos mais emblemáticos de João Pessoa. O documento o apresenta como um marco relacionado ao extremo oriental das Américas, símbolo de orgulho paraibano e convite à contemplação das belezas naturais da região.</p>
             </div>
           </article>
-
           <article class="tour-card">
             <img src="img/Teatro Santa Roza.jpg" alt="Theatro Santa Roza">
             <div>
@@ -226,7 +217,6 @@
               <p>O Theatro Santa Roza é o mais antigo da Paraíba e o quinto do Brasil. Inaugurado em 3 de novembro de 1889, recebeu o sobrenome do então presidente da Paraíba, Francisco da Gama Roza. Foi palco de importantes acontecimentos artísticos e históricos do estado.</p>
             </div>
           </article>
-
           <article class="tour-card">
             <img src="img/Estação cabro branco.jpg" alt="Estação Cabo Branco">
             <div>
@@ -235,7 +225,6 @@
               <p>A Estação Cabo Branco – Ciência, Cultura e Artes foi projetada por Oscar Niemeyer e inaugurada em 2008. O complexo possui mais de 8.500 m² de área construída e tem a missão de levar cultura, arte, ciência e tecnologia à população de forma gratuita.</p>
             </div>
           </article>
-
           <article class="tour-card">
             <img src="img/Igreja da São Francisco.jpg" alt="Igreja de São Francisco">
             <div>
@@ -244,15 +233,12 @@
               <p>Apresenta estilo barroco rococó e é considerada um importante monumento histórico-artístico religioso. Começou a ser construída em 1589 e só foi completamente terminada em 1788. Durante a invasão holandesa, chegou a servir de residência a diretores holandeses.</p>
             </div>
           </article>
-
         </div>
       </div>
     </section>
-
     <section class="feature-banner">
       <img src="img/Praia do Tambaú.jpg" alt="Vista aérea da Praia de Tambaú">
       <div class="feature-overlay"></div>
-
       <div class="container feature-content">
         <span class="eyebrow light">Sol e mar</span>
         <h2>Do patrimônio histórico à orla</h2>
@@ -260,17 +246,13 @@
         <a class="button primary" href="#praias">Conhecer praias e ilhas</a>
       </div>
     </section>
-
     <section class="section cards-section" id="praias">
       <div class="container">
-
         <div class="section-title">
           <span class="eyebrow">Praias e ilha</span>
           <h2>Mar, paisagem e tranquilidade</h2>
         </div>
-
         <div class="tour-grid beach-grid">
-
           <article class="tour-card large">
             <img src="img/Praia do Tambaú.jpg" alt="Praia de Tambaú">
             <div>
@@ -279,7 +261,6 @@
               <p>Uma das praias mais movimentadas de João Pessoa, Tambaú reúne bares, restaurantes, música ao vivo, mercado de artesanato e feirinha. Da costa também partem embarcações para Picãozinho, formação de recifes conhecida pelas piscinas naturais que aparecem durante a maré baixa.</p>
             </div>
           </article>
-
           <article class="tour-card large">
             <img src="img/Praia do cabo branco.jpg" alt="Praia de Cabo Branco">
             <div>
@@ -288,7 +269,6 @@
               <p>Vizinha de Tambaú, a Praia de Cabo Branco possui cerca de 5,1 km e integra uma das áreas mais movimentadas da orla pessoense. Restaurantes, hotéis e lanchonetes acompanham a faixa litorânea, que também se conecta ao complexo turístico onde ficam o Farol e a Estação Cabo Branco.</p>
             </div>
           </article>
-
           <article class="tour-card large">
             <img src="img/praia bessa.jpg" alt="Praia do Bessa">
             <div>
@@ -297,7 +277,6 @@
               <p>Localizada no extremo norte de João Pessoa, a Praia do Bessa possui cerca de 5,3 km, com areias claras, águas esverdeadas e calmas, recifes e coqueiros. O trecho conhecido como Caribessa é procurado pelas águas tranquilas e pela diversidade marinha.</p>
             </div>
           </article>
-
           <article class="tour-card large">
             <img src="img/Ilha da areia vermelha.jpg" alt="Ilha de Areia Vermelha">
             <div>
@@ -306,38 +285,27 @@
               <p>O Parque Estadual Marinho de Areia Vermelha fica em Cabedelo, na Região Metropolitana de João Pessoa. Durante a maré baixa, o banco de areia avermelhada fica visível e forma um cenário de águas rasas e mornas, muito procurado para passeios de catamarã e banho.</p>
             </div>
           </article>
-
         </div>
       </div>
     </section>
-
     <section class="history-section" id="historia">
       <div class="container history-layout">
-
         <div class="history-image">
           <img src="img/praça anteno.jpg" alt="Arquitetura histórica de João Pessoa">
         </div>
-
         <div class="history-copy">
           <span class="eyebrow">Conheça o passado</span>
           <h2>História de João Pessoa</h2>
-
           <p>João Pessoa foi fundada em 5 de agosto de 1585 pelos colonizadores portugueses, inicialmente com o nome de Cidade Real de Nossa Senhora das Neves. Suas primeiras edificações surgiram às margens do Rio Sanhauá, na área hoje conhecida como Porto do Capim, no bairro do Varadouro.</p>
-
           <p>Em 1588, passou a se chamar Filipéia de Nossa Senhora das Neves. Durante a ocupação holandesa, em 1634, recebeu o nome de Fredrikstad. Após a saída dos neerlandeses, passou a ser conhecida como Parahyba do Norte.</p>
-
           <p>O nome atual, João Pessoa, foi adotado em 1930 em homenagem ao político paraibano João Pessoa Cavalcanti de Albuquerque, então presidente do estado, assassinado no Recife naquele ano.</p>
         </div>
-
       </div>
     </section>
-
   </main>
-
   <footer class="site-footer">
     <div class="container footer-simple">Rotas Jampa</div>
   </footer>
-
   <script src="index.js"></script>
 </body>
 </html>
