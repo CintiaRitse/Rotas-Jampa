@@ -115,11 +115,31 @@ open index.html
 
 O login é simulado e os dados ficam salvos no `localStorage` do navegador.
 
-- **Turista** (`turista.html`): vê os lugares no mapa, avalia com nota de 1 a 5 estrelas e comentário, e pode editar ou excluir a própria avaliação.
-- **Guia Turístico** (`guia.html`): cadastra novos lugares e clica no mapa para marcar a localização. Os lugares ficam pendentes até o administrador aprovar.
-- **Administrador** (`admin.html`): aprova ou rejeita lugares (com motivo), despublica e exclui lugares, modera avaliações, bloqueia usuários e restaura os dados iniciais.
+- **Turista** (`turista.html`): busca lugares por nome, região ou categoria; filtra por custo, distância, acessibilidade e favoritos; informa a localização (GPS ou clique no mapa) para ver a distância até cada lugar; favorita lugares; avalia com estrelas e comentário; envia fotos da condição atual do local; e consulta os passeios guiados.
+- **Guia Turístico** (`guia.html`): cadastra lugares (com custo, acessibilidade e horário) marcando a localização no mapa, e divulga passeios vinculados a pelo menos um ponto turístico. Os lugares ficam pendentes até o administrador validar.
+- **Administrador** (`admin.html`): cadastra, edita, valida, despublica e exclui lugares; modera avaliações e fotos; remove passeios; bloqueia ou remove usuários; e restaura os dados iniciais.
 
-O código compartilhado entre as páginas (dados, mapa e utilitários) fica em `shared.js`, e o mapa ilustrado de João Pessoa é o arquivo `img/mapa-jampa.svg`.
+### 📋 Requisitos funcionais atendidos
+
+| RF | Onde está |
+| --- | --- |
+| RF001 Acesso à plataforma | Login por perfil em `index.html`; cada página bloqueia outros perfis |
+| RF002 Busca por nome, região ou categoria | Campo de busca e filtros em `turista.html` |
+| RF003 História e contexto cultural | Detalhe do lugar em `turista.html` |
+| RF004 Mapa dos pontos próximos | Mapa com a posição do usuário em `turista.html` |
+| RF005 Filtro por distância e região | Filtros de distância e região em `turista.html` |
+| RF006 Avaliação em estrelas | Formulário de avaliação em `turista.html` |
+| RF007 Envio de fotos | "Envie uma foto" no detalhe do lugar |
+| RF008 Favoritar locais | Botão "Favoritar" e filtro "Somente favoritos" |
+| RF009 Consulta de custos | Custo e valor no detalhe e filtro de custo |
+| RF010 Consulta de acessibilidade | Acessibilidade no detalhe e filtro "Somente acessíveis" |
+| RF011 Cadastro de pontos turísticos | Aba "Lugares" em `admin.html` |
+| RF012 Divulgação de passeios | Seção "Meus passeios" em `guia.html` |
+| RF013 Moderação de avaliações e fotos | Abas "Avaliações" e "Fotos" em `admin.html` |
+
+O código compartilhado entre as páginas (dados, mapa e utilitários) fica em `shared.js`, o formulário de lugar usado pelo guia e pelo administrador fica em `place-form.js`, e o mapa ilustrado de João Pessoa é o arquivo `img/mapa-jampa.svg`.
+
+> O mapa é ilustrativo: as distâncias são aproximadas a partir da posição no desenho. As fotos são reduzidas antes de salvar, mas o `localStorage` tem limite de cerca de 5 MB.
 
 ---
 

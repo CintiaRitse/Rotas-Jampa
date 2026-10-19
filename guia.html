@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Área do guia turístico: cadastre lugares e marque-os no mapa de João Pessoa.">
+  <meta name="description" content="Área do guia turístico: cadastre lugares, marque-os no mapa e divulgue seus passeios.">
   <title>Área do Guia | Rotas Jampa</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="img/WhatsApp Image 2026-09-06 at 20.38.51.jpeg" type="image/jpeg">
@@ -20,6 +20,7 @@
         <a href="index.html">Início</a>
         <a href="#cadastro">Cadastrar lugar</a>
         <a href="#meus-lugares">Meus lugares</a>
+        <a href="#passeios">Meus passeios</a>
         <button class="nav-logout" id="logout" type="button">Sair</button>
       </nav>
     </div>
@@ -29,7 +30,7 @@
       <div class="container">
         <span class="eyebrow light">Área do Guia Turístico</span>
         <h1>Olá, <span id="user-name">guia</span>!</h1>
-        <p>Cadastre novos lugares e marque onde eles ficam no mapa. Depois que o administrador aprovar, eles aparecem para os turistas.</p>
+        <p>Cadastre novos lugares, marque onde eles ficam no mapa e divulgue seus passeios guiados para os turistas.</p>
       </div>
     </section>
     <section class="section route-section" id="cadastro">
@@ -37,41 +38,10 @@
         <div class="section-title">
           <span class="eyebrow">Novo lugar</span>
           <h2 id="form-title">Cadastrar novo lugar</h2>
-          <p>Preencha os dados e clique no mapa para marcar a localização.</p>
+          <p>Preencha os dados e clique no mapa para marcar a localização. O administrador valida antes de publicar.</p>
         </div>
         <div class="panel-layout">
-          <form class="panel-card" id="place-form">
-            <div class="form-grid">
-              <div class="form-field">
-                <label for="nome">Nome do lugar</label>
-                <input id="nome" name="nome" type="text" maxlength="60" placeholder="Ex.: Mercado de Artesanato" required>
-              </div>
-              <div class="form-field">
-                <label for="tipo">Tipo</label>
-                <select id="tipo" name="tipo" required>
-                  <option value="cultural">Cultural</option>
-                  <option value="praia">Praia e ilha</option>
-                  <option value="natureza">Natureza</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label for="categoria">Bairro ou destaque</label>
-                <input id="categoria" name="categoria" type="text" maxlength="40" placeholder="Ex.: Tambaú" required>
-              </div>
-              <div class="form-field">
-                <label for="imagem">URL da imagem (opcional)</label>
-                <input id="imagem" name="imagem" type="url" placeholder="https://...">
-              </div>
-            </div>
-            <div class="form-field">
-              <label for="descricao">Descrição</label>
-              <textarea id="descricao" name="descricao" rows="5" maxlength="500" placeholder="Conte o que o turista vai encontrar neste lugar" required></textarea>
-            </div>
-            <div class="form-actions">
-              <button class="button primary" id="submit-place" type="submit">Enviar para aprovação</button>
-              <button class="button outline" id="cancel-edit" type="button" hidden>Cancelar edição</button>
-            </div>
-          </form>
+          <form class="panel-card" id="place-form"></form>
           <div class="map-card">
             <div class="map pickable" id="map">
               <img src="img/mapa-jampa.svg" alt="Mapa ilustrado de João Pessoa">
@@ -97,11 +67,69 @@
         <div class="manage-grid" id="my-places"></div>
       </div>
     </section>
+    <section class="section route-section" id="passeios">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow">Divulgação</span>
+          <h2 id="tour-title">Divulgar novo passeio</h2>
+          <p>Todo passeio precisa incluir pelo menos um ponto turístico publicado. A reserva é combinada direto com você.</p>
+        </div>
+        <div class="panel-layout">
+          <form class="panel-card" id="tour-form">
+            <div class="form-field">
+              <label for="tour-name">Nome do passeio</label>
+              <input id="tour-name" name="nome" type="text" maxlength="60" placeholder="Ex.: Caminhada pelo Centro Histórico" required>
+            </div>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="tour-duration">Duração</label>
+                <input id="tour-duration" name="duracao" type="text" maxlength="30" placeholder="Ex.: 3 horas" required>
+              </div>
+              <div class="form-field">
+                <label for="tour-price">Valor</label>
+                <input id="tour-price" name="preco" type="text" maxlength="40" placeholder="Ex.: R$ 80,00 por pessoa" required>
+              </div>
+              <div class="form-field">
+                <label for="tour-date">Data e horário (opcional)</label>
+                <input id="tour-date" name="data" type="datetime-local">
+              </div>
+              <div class="form-field">
+                <label for="tour-capacity">Vagas</label>
+                <input id="tour-capacity" name="vagas" type="number" min="1" max="200" value="10" required>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="tour-contact">Contato (telefone ou WhatsApp)</label>
+              <input id="tour-contact" name="contato" type="text" maxlength="40" placeholder="Ex.: (83) 99999-0000" required>
+            </div>
+            <div class="form-field">
+              <label for="tour-description">Descrição</label>
+              <textarea id="tour-description" name="descricao" rows="4" maxlength="500" placeholder="Conte o roteiro e o que está incluso" required></textarea>
+            </div>
+            <fieldset class="check-group">
+              <legend>Pontos turísticos do passeio</legend>
+              <div class="check-list" id="tour-places"></div>
+            </fieldset>
+            <div class="form-actions">
+              <button class="button primary" id="tour-submit" type="submit">Divulgar passeio</button>
+              <button class="button outline" id="tour-cancel" type="button" hidden>Cancelar edição</button>
+            </div>
+          </form>
+          <div>
+            <div class="list-toolbar">
+              <h3>Meus passeios</h3>
+            </div>
+            <div class="tour-list" id="my-tours"></div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   <footer class="site-footer">
     <div class="container footer-simple">Rotas Jampa</div>
   </footer>
   <script src="shared.js"></script>
+  <script src="place-form.js"></script>
   <script src="guia.js"></script>
 </body>
 </html>

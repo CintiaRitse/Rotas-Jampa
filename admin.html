@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Painel do administrador: gerencie lugares, avaliações e usuários do Rotas Jampa.">
+  <meta name="description" content="Painel do administrador: gerencie lugares, avaliações, fotos, passeios e usuários do Rotas Jampa.">
   <title>Painel do Administrador | Rotas Jampa</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="img/WhatsApp Image 2026-09-06 at 20.38.51.jpeg" type="image/jpeg">
@@ -28,7 +28,7 @@
       <div class="container">
         <span class="eyebrow light">Painel do Administrador</span>
         <h1>Olá, <span id="user-name">admin</span>!</h1>
-        <p>Aprove os lugares enviados pelos guias, modere as avaliações dos turistas e gerencie os usuários da plataforma.</p>
+        <p>Cadastre e valide pontos turísticos, modere avaliações e fotos, acompanhe os passeios e gerencie os usuários da plataforma.</p>
       </div>
     </section>
     <section class="section route-section" id="painel">
@@ -38,6 +38,8 @@
           <button class="tab-button active" type="button" data-tab="tab-pendentes">Aprovações <span id="pending-count"></span></button>
           <button class="tab-button" type="button" data-tab="tab-lugares">Lugares</button>
           <button class="tab-button" type="button" data-tab="tab-avaliacoes">Avaliações</button>
+          <button class="tab-button" type="button" data-tab="tab-fotos">Fotos <span id="photo-count"></span></button>
+          <button class="tab-button" type="button" data-tab="tab-passeios">Passeios</button>
           <button class="tab-button" type="button" data-tab="tab-usuarios">Usuários</button>
         </div>
         <div class="tab-panel active" id="tab-pendentes">
@@ -58,15 +60,32 @@
         <div class="tab-panel" id="tab-lugares">
           <div class="list-toolbar">
             <h3>Todos os lugares</h3>
-            <button class="button outline small" id="reset-data" type="button">Restaurar dados iniciais</button>
+            <div class="table-actions">
+              <button class="button primary small" id="new-place" type="button">Novo lugar</button>
+              <button class="button outline small" id="reset-data" type="button">Restaurar dados iniciais</button>
+            </div>
+          </div>
+          <div class="place-editor" id="place-editor" hidden>
+            <h3 id="form-title">Cadastrar novo lugar</h3>
+            <div class="panel-layout">
+              <form class="panel-card" id="place-form"></form>
+              <div class="map-card">
+                <div class="map pickable" id="form-map">
+                  <img src="img/mapa-jampa.svg" alt="Mapa ilustrado de João Pessoa">
+                </div>
+                <p class="map-hint" id="map-hint"></p>
+              </div>
+            </div>
           </div>
           <div class="table-wrapper">
             <table class="data-table">
               <thead>
                 <tr>
                   <th>Lugar</th>
-                  <th>Tipo</th>
-                  <th>Cadastrado por</th>
+                  <th>Categoria</th>
+                  <th>Região</th>
+                  <th>Custo</th>
+                  <th>Acessibilidade</th>
                   <th>Status</th>
                   <th>Nota</th>
                   <th>Ações</th>
@@ -90,6 +109,26 @@
                 </tr>
               </thead>
               <tbody id="reviews-table"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-panel" id="tab-fotos">
+          <div class="photo-grid admin-photos" id="photos-list"></div>
+        </div>
+        <div class="tab-panel" id="tab-passeios">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Passeio</th>
+                  <th>Guia</th>
+                  <th>Pontos turísticos</th>
+                  <th>Valor</th>
+                  <th>Data</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tours-table"></tbody>
             </table>
           </div>
         </div>
@@ -117,6 +156,7 @@
     <div class="container footer-simple">Rotas Jampa</div>
   </footer>
   <script src="shared.js"></script>
+  <script src="place-form.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

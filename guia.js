@@ -2,28 +2,16 @@
 
 const session = requireRole("guia");
 
-const map = document.querySelector("#map");
-const mapHint = document.querySelector("#map-hint");
-const placeForm = document.querySelector("#place-form");
-const formTitle = document.querySelector("#form-title");
-const submitButton = document.querySelector("#submit-place");
-const cancelButton = document.querySelector("#cancel-edit");
 const myPlaces = document.querySelector("#my-places");
+const tourForm = document.querySelector("#tour-form");
+const tourTitle = document.querySelector("#tour-title");
+const tourPlaces = document.querySelector("#tour-places");
+const tourSubmit = document.querySelector("#tour-submit");
+const tourCancel = document.querySelector("#tour-cancel");
+const myTours = document.querySelector("#my-tours");
 
-let editingId = "";
-let draft = null;
-
-function renderMap() {
-  const places = getPlaces().filter(place =>
-    place.id !== editingId && (place.status === "aprovado" || place.authorId === session.userId)
-  );
-
-  renderMapPins(map, places, { draft });
-
-  mapHint.innerHTML = draft
-    ? "<strong>Local marcado!</strong> Clique em outro ponto do mapa para ajustar."
-    : "Clique no mapa para marcar onde fica o lugar.";
-}
+let placeForm = null;
+let editingTourId = "";
 
 function renderMyPlaces() {
   const places = getPlaces()
@@ -41,7 +29,7 @@ function renderMyPlaces() {
       <div>
         <span class="status-badge ${place.status}">${statusNames[place.status]}</span>
         <h3>${escapeHTML(place.name)}</h3>
-        <small>${placeTypes[place.type]} · ${escapeHTML(place.category)}</small>
+        <small>${placeTypes[place.type]} · ${regions[place.region]} · ${costNames[place.cost]}</small>
         <p>${escapeHTML(place.description)}</p>
         ${place.status === "rejeitado" ? `<p class="reject-reason"><strong>Motivo:</strong> ${escapeHTML(place.rejectReason)}</p>` : ""}
         <div class="table-actions">
@@ -53,95 +41,101 @@ function renderMyPlaces() {
   `).join("");
 }
 
-function resetForm() {
-  placeForm.reset();
-  editingId = "";
-  draft = null;
-  formTitle.textContent = "Cadastrar novo lugar";
-  submitButton.textContent = "Enviar para aprovação";
-  cancelButton.hidden = true;
-  renderMap();
+function renderTourPlaces(selectedIds = []) {
+  const places = getPlaces().filter(place => place.status === "aprovado");
+
+  tourPlaces.innerHTML = places.map(place => `
+    <label class="check-item">
+      <input type="checkbox" name="pontos" value="${place.id}" ${selectedIds.includes(place.id) ? "checked" : ""}>
+      ${escapeHTML(place.name)}
+    </label>
+  `).join("");
 }
 
-function startEdit(id) {
-  const place = getPlaces().find(item => item.id === id);
+function renderMyTours() {
+  const tours = getTours().filter(tour => tour.guideId === session.userId);
+  const places = getPlaces();
 
-  if (!place) {
-    return;
-  }
+  myTours.innerHTML = tours.length
+    ? tours.map(tour => renderTourCard(tour, places, {
+      actions: `
+        <div class="table-actions">
+          <button class="button outline small" type="button" data-tour-action="edit" data-id="${tour.id}">Editar</button>
+          <button class="button danger small" type="button" data-tour-action="delete" data-id="${tour.id}">Excluir</button>
+        </div>
+      `
+    })).join("")
+    : `<p class="empty">Você ainda não divulgou nenhum passeio.</p>`;
+}
 
-  editingId = id;
-  draft = { x: place.x, y: place.y };
+function resetTourForm() {
+  tourForm.reset();
+  editingTourId = "";
+  tourTitle.textContent = "Divulgar novo passeio";
+  tourSubmit.textContent = "Divulgar passeio";
+  tourCancel.hidden = true;
+  renderTourPlaces();
+}
 
-  placeForm.elements.namedItem("nome").value = place.name;
-  placeForm.elements.namedItem("tipo").value = place.type;
-  placeForm.elements.namedItem("categoria").value = place.category;
-  placeForm.elements.namedItem("imagem").value = place.image === defaultImage ? "" : place.image;
-  placeForm.elements.namedItem("descricao").value = place.description;
+function editTour(id) {
+  const tour = getTours().find(item => item.id === id);
+  const fields = tourForm.elements;
 
-  formTitle.textContent = `Editando: ${place.name}`;
-  submitButton.textContent = "Salvar e reenviar";
-  cancelButton.hidden = false;
-  renderMap();
-  document.querySelector("#cadastro").scrollIntoView({ behavior: "smooth" });
+  editingTourId = id;
+  fields.namedItem("nome").value = tour.name;
+  fields.namedItem("duracao").value = tour.duration;
+  fields.namedItem("preco").value = tour.price;
+  fields.namedItem("data").value = tour.dateTime;
+  fields.namedItem("vagas").value = tour.capacity;
+  fields.namedItem("contato").value = tour.contact;
+  fields.namedItem("descricao").value = tour.description;
+  renderTourPlaces(tour.placeIds);
+
+  tourTitle.textContent = `Editando: ${tour.name}`;
+  tourSubmit.textContent = "Salvar passeio";
+  tourCancel.hidden = false;
+  document.querySelector("#passeios").scrollIntoView({ behavior: "smooth" });
 }
 
 if (session) {
   document.querySelector("#user-name").textContent = session.name;
 
-  map.addEventListener("click", event => {
-    const area = map.getBoundingClientRect();
+  placeForm = createPlaceForm({
+    form: document.querySelector("#place-form"),
+    map: document.querySelector("#map"),
+    mapHint: document.querySelector("#map-hint"),
+    title: document.querySelector("#form-title"),
+    texts: { createTitle: "Cadastrar novo lugar", create: "Enviar para aprovação", edit: "Salvar e reenviar" },
+    getMapPlaces: editingId => getPlaces().filter(place =>
+      place.id !== editingId && (place.status === "aprovado" || place.authorId === session.userId)
+    ),
+    onSubmit: (data, editingId) => {
+      const places = getPlaces();
 
-    draft = {
-      x: Number(((event.clientX - area.left) / area.width * 100).toFixed(1)),
-      y: Number(((event.clientY - area.top) / area.height * 100).toFixed(1))
-    };
+      if (editingId) {
+        const place = places.find(item => item.id === editingId);
+        Object.assign(place, data, { status: "pendente", rejectReason: "", updatedAt: new Date().toISOString() });
+      } else {
+        places.push({
+          id: createId(),
+          ...data,
+          status: "pendente",
+          rejectReason: "",
+          author: session.name,
+          authorId: session.userId,
+          createdAt: new Date().toISOString()
+        });
+      }
 
-    renderMap();
-  });
+      if (!savePlaces(places)) {
+        return false;
+      }
 
-  placeForm.addEventListener("submit", event => {
-    event.preventDefault();
-
-    if (!draft) {
-      showMessage("Marque o local no mapa antes de enviar.");
-      return;
+      showMessage(editingId ? "Lugar atualizado e reenviado para aprovação." : "Lugar enviado para aprovação do administrador.");
+      renderMyPlaces();
+      return true;
     }
-
-    const formData = new FormData(placeForm);
-    const places = getPlaces();
-    const data = {
-      name: String(formData.get("nome")).trim(),
-      type: formData.get("tipo"),
-      category: String(formData.get("categoria")).trim(),
-      description: String(formData.get("descricao")).trim(),
-      image: String(formData.get("imagem")).trim() || defaultImage,
-      x: draft.x,
-      y: draft.y,
-      status: "pendente",
-      rejectReason: ""
-    };
-
-    if (editingId) {
-      const place = places.find(item => item.id === editingId);
-      Object.assign(place, data, { updatedAt: new Date().toISOString() });
-    } else {
-      places.push({
-        id: createId(),
-        ...data,
-        author: session.name,
-        authorId: session.userId,
-        createdAt: new Date().toISOString()
-      });
-    }
-
-    savePlaces(places);
-    showMessage(editingId ? "Lugar atualizado e reenviado para aprovação." : "Lugar enviado para aprovação do administrador.");
-    resetForm();
-    renderMyPlaces();
   });
-
-  cancelButton.addEventListener("click", resetForm);
 
   myPlaces.addEventListener("click", event => {
     const button = event.target.closest("[data-action]");
@@ -151,24 +145,88 @@ if (session) {
     }
 
     if (button.dataset.action === "edit") {
-      startEdit(button.dataset.id);
+      placeForm.edit(getPlaces().find(place => place.id === button.dataset.id));
+      document.querySelector("#cadastro").scrollIntoView({ behavior: "smooth" });
       return;
     }
 
-    if (confirm("Deseja excluir este lugar? As avaliações dele também serão apagadas.")) {
-      savePlaces(getPlaces().filter(place => place.id !== button.dataset.id));
-      saveReviews(getReviews().filter(review => review.placeId !== button.dataset.id));
-
-      if (editingId === button.dataset.id) {
-        resetForm();
-      }
-
-      renderMap();
+    if (confirm("Deseja excluir este lugar? As avaliações, fotos e favoritos dele também serão apagados.")) {
+      deletePlace(button.dataset.id);
+      placeForm.reset();
       renderMyPlaces();
+      renderTourPlaces();
+      renderMyTours();
       showMessage("Lugar excluído.");
     }
   });
 
-  renderMap();
+  tourForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const formData = new FormData(tourForm);
+    const placeIds = formData.getAll("pontos");
+
+    if (!placeIds.length) {
+      showMessage("Escolha pelo menos um ponto turístico para o passeio.");
+      return;
+    }
+
+    const data = {
+      name: String(formData.get("nome")).trim(),
+      duration: String(formData.get("duracao")).trim(),
+      price: String(formData.get("preco")).trim(),
+      dateTime: formData.get("data"),
+      capacity: Number(formData.get("vagas")),
+      contact: String(formData.get("contato")).trim(),
+      description: String(formData.get("descricao")).trim(),
+      placeIds
+    };
+
+    const tours = getTours();
+
+    if (editingTourId) {
+      Object.assign(tours.find(tour => tour.id === editingTourId), data, { updatedAt: new Date().toISOString() });
+    } else {
+      tours.push({
+        id: createId(),
+        ...data,
+        guideId: session.userId,
+        guideName: session.name,
+        createdAt: new Date().toISOString()
+      });
+    }
+
+    if (saveTours(tours)) {
+      showMessage(editingTourId ? "Passeio atualizado." : "Passeio divulgado para os turistas!");
+      resetTourForm();
+      renderMyTours();
+    }
+  });
+
+  tourCancel.addEventListener("click", resetTourForm);
+
+  myTours.addEventListener("click", event => {
+    const button = event.target.closest("[data-tour-action]");
+
+    if (!button) {
+      return;
+    }
+
+    if (button.dataset.tourAction === "edit") {
+      editTour(button.dataset.id);
+    } else if (confirm("Deseja excluir este passeio?")) {
+      saveTours(getTours().filter(tour => tour.id !== button.dataset.id));
+
+      if (editingTourId === button.dataset.id) {
+        resetTourForm();
+      }
+
+      renderMyTours();
+      showMessage("Passeio excluído.");
+    }
+  });
+
   renderMyPlaces();
+  resetTourForm();
+  renderMyTours();
 }

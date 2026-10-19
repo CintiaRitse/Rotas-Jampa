@@ -119,6 +119,10 @@ loginForm.addEventListener("submit", event => {
     users.push(user);
   }
 
+  if (selectedProfile === "guia") {
+    user.certificate = String(formData.get("cadastro")).trim();
+  }
+
   user.lastLogin = new Date().toISOString();
   saveUsers(users);
   saveSession({ userId: user.id, role: user.role, name: user.name });

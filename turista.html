@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Área do turista: avalie os pontos turísticos de João Pessoa.">
+  <meta name="description" content="Área do turista: busque, favorite e avalie os pontos turísticos de João Pessoa.">
   <title>Área do Turista | Rotas Jampa</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="img/WhatsApp Image 2026-09-06 at 20.38.51.jpeg" type="image/jpeg">
@@ -18,8 +18,9 @@
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
       <nav class="primary-nav" id="menu">
         <a href="index.html">Início</a>
-        <a href="#lugares">Mapa</a>
-        <a href="#detalhes">Avaliar</a>
+        <a href="#lugares">Buscar lugares</a>
+        <a href="#detalhes">Detalhes</a>
+        <a href="#passeios">Passeios</a>
         <button class="nav-logout" id="logout" type="button">Sair</button>
       </nav>
     </div>
@@ -29,31 +30,69 @@
       <div class="container">
         <span class="eyebrow light">Área do Turista</span>
         <h1>Olá, <span id="user-name">turista</span>!</h1>
-        <p>Explore o mapa, escolha um lugar e conte como foi a sua visita. Sua avaliação ajuda outros turistas a montar o roteiro.</p>
+        <p>Busque lugares, veja o que está perto de você, favorite os que quer visitar e conte como foi a sua visita.</p>
       </div>
     </section>
     <section class="section route-section" id="lugares">
       <div class="container">
         <div class="section-title">
           <span class="eyebrow">Mapa de João Pessoa</span>
-          <h2>Escolha um lugar</h2>
-          <p>Clique em um pino do mapa ou em um item da lista para ver os detalhes e avaliar.</p>
+          <h2>Encontre um lugar</h2>
+          <p>Busque por nome, região ou categoria e use os filtros para achar lugares do seu jeito.</p>
+        </div>
+        <form class="panel-card filter-bar" id="filters">
+          <div class="form-field search-field">
+            <label for="search">Buscar</label>
+            <input id="search" type="search" placeholder="Nome, região ou categoria">
+          </div>
+          <div class="form-field">
+            <label for="type-filter">Categoria</label>
+            <select id="type-filter"></select>
+          </div>
+          <div class="form-field">
+            <label for="region-filter">Região</label>
+            <select id="region-filter"></select>
+          </div>
+          <div class="form-field">
+            <label for="cost-filter">Custo</label>
+            <select id="cost-filter"></select>
+          </div>
+          <div class="form-field">
+            <label for="distance-filter">Distância</label>
+            <select id="distance-filter" disabled>
+              <option value="todas">Qualquer distância</option>
+              <option value="1">Até 1 km</option>
+              <option value="3">Até 3 km</option>
+              <option value="5">Até 5 km</option>
+              <option value="10">Até 10 km</option>
+            </select>
+          </div>
+          <div class="filter-checks">
+            <label class="check-item"><input id="accessible-filter" type="checkbox"> Somente acessíveis</label>
+            <label class="check-item"><input id="favorite-filter" type="checkbox"> Somente favoritos</label>
+          </div>
+        </form>
+        <div class="location-bar">
+          <p id="location-status">Informe sua localização para ver a distância até cada lugar.</p>
+          <div class="table-actions">
+            <button class="button outline small" id="locate" type="button">Usar minha localização</button>
+            <button class="button outline small" id="pick-location" type="button">Marcar no mapa</button>
+          </div>
         </div>
         <div class="panel-layout">
           <div class="map-card">
             <div class="map" id="map">
               <img src="img/mapa-jampa.svg" alt="Mapa ilustrado de João Pessoa">
             </div>
+            <div class="map-legend">
+              <span><i class="aprovado"></i>Ponto turístico</span>
+              <span><i class="user"></i>Você está aqui</span>
+            </div>
           </div>
           <div>
             <div class="list-toolbar">
               <h3>Lugares</h3>
-              <select id="type-filter" aria-label="Filtrar lugares por tipo">
-                <option value="todos">Todos os tipos</option>
-                <option value="cultural">Cultural</option>
-                <option value="praia">Praia e ilha</option>
-                <option value="natureza">Natureza</option>
-              </select>
+              <small id="result-count"></small>
             </div>
             <div class="place-list" id="place-list"></div>
           </div>
@@ -62,6 +101,16 @@
     </section>
     <section class="section detail-section" id="detalhes">
       <div class="container" id="place-detail"></div>
+    </section>
+    <section class="section route-section" id="passeios">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow">Com guias locais</span>
+          <h2>Passeios guiados</h2>
+          <p>Passeios divulgados pelos guias da plataforma. Fale direto com o guia para reservar.</p>
+        </div>
+        <div class="tour-list" id="tour-list"></div>
+      </div>
     </section>
   </main>
   <footer class="site-footer">
