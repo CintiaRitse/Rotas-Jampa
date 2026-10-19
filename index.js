@@ -1,22 +1,5 @@
 "use strict";
 
-const menuButton = document.querySelector(".menu-toggle");
-const navigation = document.querySelector(".primary-nav");
-
-if (menuButton && navigation) {
-  menuButton.addEventListener("click", () => {
-    const open = navigation.classList.toggle("is-open");
-    menuButton.setAttribute("aria-expanded", String(open));
-  });
-
-  navigation.addEventListener("click", event => {
-    if (event.target.closest("a")) {
-      navigation.classList.remove("is-open");
-      menuButton.setAttribute("aria-expanded", "false");
-    }
-  });
-}
-
 const routeItems = document.querySelectorAll(".route-item");
 const routeImage = document.querySelector("#route-image");
 const routeTitle = document.querySelector("#route-title");
@@ -44,6 +27,14 @@ const loginForm = document.querySelector("#login-form");
 const closeLogin = document.querySelector("#close-login");
 
 let selectedProfile = "";
+
+const activeSession = getActiveUser();
+const accessLink = document.querySelector('.primary-nav a[href="#acesso"]');
+
+if (activeSession && accessLink) {
+  accessLink.textContent = "Meu painel";
+  accessLink.href = panelPages[activeSession.role];
+}
 
 const loginData = {
   turista: {
@@ -106,20 +97,35 @@ closeLogin.addEventListener("click", () => {
 loginForm.addEventListener("submit", event => {
   event.preventDefault();
 
-  localStorage.setItem("rotasJampaRole", selectedProfile);
+  const formData = new FormData(loginForm);
+  const identifier = String(formData.get("email") ?? formData.get("usuario")).trim().toLowerCase();
+  const users = getUsers();
+  let user = users.find(item => item.identifier === identifier && item.role === selectedProfile);
 
-  const profileNames = {
-    turista: "Turista",
-    guia: "Guia Turístico",
-    admin: "Administrador"
-  };
+  if (user?.blocked) {
+    alert("Este usuário foi bloqueado pelo administrador.");
+    return;
+  }
 
-  alert(`Login como ${profileNames[selectedProfile]} realizado com sucesso!`);
+  if (!user) {
+    user = {
+      id: createId(),
+      identifier,
+      role: selectedProfile,
+      name: identifier.split("@")[0],
+      blocked: false,
+      createdAt: new Date().toISOString()
+    };
+    users.push(user);
+  }
 
-  loginForm.reset();
-  loginBox.classList.remove("active");
+  if (selectedProfile === "guia") {
+    user.certificate = String(formData.get("cadastro")).trim();
+  }
 
-  document.querySelector("#roteiro")?.scrollIntoView({
-    behavior: "smooth"
-  });
+  user.lastLogin = new Date().toISOString();
+  saveUsers(users);
+  saveSession({ userId: user.id, role: user.role, name: user.name });
+
+  window.location.href = panelPages[selectedProfile];
 });
