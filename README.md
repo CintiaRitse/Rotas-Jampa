@@ -111,6 +111,16 @@ open index.html
 - Layout adaptado para computadores, tablets e celulares.
 - Imagens reais dos pontos turísticos apresentadas no projeto.
 
+### 👥 Perfis de usuário
+
+O login é simulado e os dados ficam salvos no `localStorage` do navegador.
+
+- **Turista** (`turista.html`): vê os lugares no mapa, avalia com nota de 1 a 5 estrelas e comentário, e pode editar ou excluir a própria avaliação.
+- **Guia Turístico** (`guia.html`): cadastra novos lugares e clica no mapa para marcar a localização. Os lugares ficam pendentes até o administrador aprovar.
+- **Administrador** (`admin.html`): aprova ou rejeita lugares (com motivo), despublica e exclui lugares, modera avaliações, bloqueia usuários e restaura os dados iniciais.
+
+O código compartilhado entre as páginas (dados, mapa e utilitários) fica em `shared.js`, e o mapa ilustrado de João Pessoa é o arquivo `img/mapa-jampa.svg`.
+
 ---
 
 ## 📱 Responsividade

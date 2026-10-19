@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Área do turista: avalie os pontos turísticos de João Pessoa.">
+  <title>Área do Turista | Rotas Jampa</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="img/WhatsApp Image 2026-09-06 at 20.38.51.jpeg" type="image/jpeg">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">RJ</span>
+        <span>Rotas Jampa</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+      <nav class="primary-nav" id="menu">
+        <a href="index.html">Início</a>
+        <a href="#lugares">Mapa</a>
+        <a href="#detalhes">Avaliar</a>
+        <button class="nav-logout" id="logout" type="button">Sair</button>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="panel-hero">
+      <div class="container">
+        <span class="eyebrow light">Área do Turista</span>
+        <h1>Olá, <span id="user-name">turista</span>!</h1>
+        <p>Explore o mapa, escolha um lugar e conte como foi a sua visita. Sua avaliação ajuda outros turistas a montar o roteiro.</p>
+      </div>
+    </section>
+    <section class="section route-section" id="lugares">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow">Mapa de João Pessoa</span>
+          <h2>Escolha um lugar</h2>
+          <p>Clique em um pino do mapa ou em um item da lista para ver os detalhes e avaliar.</p>
+        </div>
+        <div class="panel-layout">
+          <div class="map-card">
+            <div class="map" id="map">
+              <img src="img/mapa-jampa.svg" alt="Mapa ilustrado de João Pessoa">
+            </div>
+          </div>
+          <div>
+            <div class="list-toolbar">
+              <h3>Lugares</h3>
+              <select id="type-filter" aria-label="Filtrar lugares por tipo">
+                <option value="todos">Todos os tipos</option>
+                <option value="cultural">Cultural</option>
+                <option value="praia">Praia e ilha</option>
+                <option value="natureza">Natureza</option>
+              </select>
+            </div>
+            <div class="place-list" id="place-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section detail-section" id="detalhes">
+      <div class="container" id="place-detail"></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-simple">Rotas Jampa</div>
+  </footer>
+  <script src="shared.js"></script>
+  <script src="turista.js"></script>
+</body>
+</html>

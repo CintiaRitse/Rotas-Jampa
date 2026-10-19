@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Painel do administrador: gerencie lugares, avaliações e usuários do Rotas Jampa.">
+  <title>Painel do Administrador | Rotas Jampa</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="img/WhatsApp Image 2026-09-06 at 20.38.51.jpeg" type="image/jpeg">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">RJ</span>
+        <span>Rotas Jampa</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+      <nav class="primary-nav" id="menu">
+        <a href="index.html">Início</a>
+        <a href="#painel">Painel</a>
+        <button class="nav-logout" id="logout" type="button">Sair</button>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="panel-hero">
+      <div class="container">
+        <span class="eyebrow light">Painel do Administrador</span>
+        <h1>Olá, <span id="user-name">admin</span>!</h1>
+        <p>Aprove os lugares enviados pelos guias, modere as avaliações dos turistas e gerencie os usuários da plataforma.</p>
+      </div>
+    </section>
+    <section class="section route-section" id="painel">
+      <div class="container">
+        <div class="stats-grid" id="stats"></div>
+        <div class="tabs" role="tablist">
+          <button class="tab-button active" type="button" data-tab="tab-pendentes">Aprovações <span id="pending-count"></span></button>
+          <button class="tab-button" type="button" data-tab="tab-lugares">Lugares</button>
+          <button class="tab-button" type="button" data-tab="tab-avaliacoes">Avaliações</button>
+          <button class="tab-button" type="button" data-tab="tab-usuarios">Usuários</button>
+        </div>
+        <div class="tab-panel active" id="tab-pendentes">
+          <div class="panel-layout">
+            <div class="manage-list" id="pending-list"></div>
+            <div class="map-card" id="admin-map-card">
+              <div class="map" id="map">
+                <img src="img/mapa-jampa.svg" alt="Mapa ilustrado de João Pessoa">
+              </div>
+              <div class="map-legend">
+                <span><i class="aprovado"></i>Aprovado</span>
+                <span><i class="pendente"></i>Pendente</span>
+                <span><i class="rejeitado"></i>Rejeitado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-panel" id="tab-lugares">
+          <div class="list-toolbar">
+            <h3>Todos os lugares</h3>
+            <button class="button outline small" id="reset-data" type="button">Restaurar dados iniciais</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Lugar</th>
+                  <th>Tipo</th>
+                  <th>Cadastrado por</th>
+                  <th>Status</th>
+                  <th>Nota</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="places-table"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-panel" id="tab-avaliacoes">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Lugar</th>
+                  <th>Turista</th>
+                  <th>Nota</th>
+                  <th>Comentário</th>
+                  <th>Data</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="reviews-table"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-panel" id="tab-usuarios">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Login</th>
+                  <th>Perfil</th>
+                  <th>Último acesso</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="users-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-simple">Rotas Jampa</div>
+  </footer>
+  <script src="shared.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
